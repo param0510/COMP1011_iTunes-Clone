@@ -15,12 +15,14 @@
    <children>
       <BorderPane layoutX="580.0" layoutY="175.0" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <TableView fx:id="resultsTableView" prefHeight="448.0" prefWidth="492.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="resultsTableView" onKeyPressed="#enterKeyOnSelectedItem" prefHeight="448.0" prefWidth="492.0" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="typeColumn" prefWidth="122.39998626708984" text="Type" />
                 <TableColumn fx:id="artistNameColumn" prefWidth="105.60003662109375" text="Artist Name" />
-                  <TableColumn fx:id="countryColumn" prefWidth="122.4000244140625" text="Country" />
-                  <TableColumn fx:id="releaseDateColumn" prefWidth="124.80001831054688" text="Release Date" />
+                  <TableColumn fx:id="nameColumn" prefWidth="122.4000244140625" text="Name" />
+                  <TableColumn fx:id="countryColumn" prefWidth="124.80001831054688" text="Country" />
+                  <TableColumn fx:id="releaseDateColumn" prefWidth="115.2000732421875" text="Release Date" />
+                  <TableColumn fx:id="thumbnailColumn" prefWidth="126.4000244140625" text="Thumbnail" />
               </columns>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -38,7 +40,7 @@
                         <Insets right="50.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="266.0" />
+                  <TextField fx:id="searchTextField" onKeyPressed="#enterKeyOnSearchBar" prefHeight="26.0" prefWidth="266.0" />
                   <Button mnemonicParsing="false" onAction="#searchButtonPressed" text="Search" />
                </children>
                <padding>

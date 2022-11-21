@@ -1,11 +1,12 @@
 package com.example.assignment2;
 
-import java.util.StringJoiner;
+import javafx.scene.image.Image;
 
 public class Result {
-    private String wrapperType, kind, artistName, collectionName, trackName, artistViewUrl, collectionViewUrl, trackViewUrl, previewUrl, artworkUrl60, releaseDate, trackTimeMillis, country, currency, primaryGenreName;
+    private String wrapperType, kind, artistName, collectionName, trackName, artistViewUrl, collectionViewUrl, trackViewUrl, previewUrl, artworkUrl30, artworkUrl100, releaseDate, trackTimeMillis, country, currency, primaryGenreName;
     private int artistId, collectionId, trackId;
     private double collectionPrice, trackPrice;
+
 
     // Variable items
     private String description, shortDescription, longDescription;
@@ -47,8 +48,12 @@ public class Result {
         return previewUrl;
     }
 
-    public String getArtworkUrl60() {
-        return artworkUrl60;
+    public String getArtworkUrl30() {
+        return artworkUrl30;
+    }
+
+    public String getArtworkUrl100() {
+        return artworkUrl100;
     }
 
     public String getReleaseDate() {
@@ -125,7 +130,8 @@ public class Result {
                 "\t collectionViewUrl='" + collectionViewUrl + "'\n" +
                 "\t trackViewUrl='" + trackViewUrl + "'\n" +
                 "\t previewUrl='" + previewUrl + "'\n" +
-                "\t artworkUrl60='" + artworkUrl60 + "'\n" +
+                "\t artworkUrl30='" + artworkUrl30 + "'\n" +
+                "\t artworkUrl100='" + artworkUrl100 + "'\n" +
                 "\t releaseDate='" + releaseDate + "'\n" +
                 "\t trackTimeMillis='" + trackTimeMillis + "'\n" +
                 "\t country='" + country + "'\n" +
