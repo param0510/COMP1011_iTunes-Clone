@@ -19,6 +19,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -53,8 +54,11 @@ public class LibraryViewController implements Initializable {
     @FXML
     private TableView<Result> resultsTableView;
 
+    List<Result> results;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("kind"));
         artistNameColumn.setCellValueFactory(new PropertyValueFactory<>("artistName"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("trackName"));
@@ -66,7 +70,8 @@ public class LibraryViewController implements Initializable {
         try {
             APIUtility.readITunesApi("*");
             APIResponse apiResponse = APIUtility.getResultFromJson();
-            List<Result> results = Arrays.stream(apiResponse.getResults()).toList();
+            results = Arrays.stream(apiResponse.getResults()).toList();
+
 
             resultsTableView.getItems().addAll(results);
         } catch (IOException e) {

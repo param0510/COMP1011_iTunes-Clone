@@ -49,7 +49,7 @@ public class ItemViewController  {
     private Label titleLabel;
 
     @FXML
-    private Hyperlink previewUrlLink;
+    private Label urlLinkLabel;
 
 //    @FXML
 //    private MediaView songMediaView;
@@ -75,8 +75,6 @@ public class ItemViewController  {
         System.out.println(selectedItem.getTrackName());
         System.out.println(selectedItem.getPrimaryGenreName());
 
-
-
         titleLabel.setText(selectedItem.getTrackName());
 
     //  Another way - by using local resources
@@ -93,9 +91,7 @@ public class ItemViewController  {
         genreLabel.setText(selectedItem.getPrimaryGenreName());
         trackNameLabel.setText(selectedItem.getTrackName());
 
-        previewUrlLink.setText(selectedItem.getPreviewUrl());
-        previewUrlLink.fire();
-
+        urlLinkLabel.setText(selectedItem.getPreviewUrl());
 
 //         This does not work!!
 
