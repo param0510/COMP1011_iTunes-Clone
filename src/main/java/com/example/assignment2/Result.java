@@ -7,10 +7,14 @@ public class Result {
     private int artistId, collectionId, trackId;
     private double collectionPrice, trackPrice;
 
-
-    // Variable items
+    // Variable items - with null values for certain objects
     private String description, shortDescription, longDescription;
     private boolean isStreamable;
+
+    /**
+     * These are all the getter for the instance variables
+     * @return - instance variable value
+     */
 
     public String getWrapperType() {
         return wrapperType;
@@ -112,6 +116,10 @@ public class Result {
         return isStreamable;
     }
 
+    /**
+     * This is the toString method used to get a formatted string version of the object data
+     * @return
+     */
     @Override
     public String toString() {
 

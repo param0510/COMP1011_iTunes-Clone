@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class LibraryViewController implements Initializable {
 
@@ -54,8 +55,14 @@ public class LibraryViewController implements Initializable {
     @FXML
     private TableView<Result> resultsTableView;
 
-    List<Result> results;
+    private List<Result> results;
+    private APIResponse apiResponse;
 
+    /**
+     * This is the initialize method which loads up whenever the library-view.fxml scene is loaded
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -67,51 +74,65 @@ public class LibraryViewController implements Initializable {
 
 //        thumbnailColumn.setCellValueFactory(new PropertyValueFactory<>("thumbnailImage"));
 
-        try {
-            APIUtility.readITunesApi("*");
-            APIResponse apiResponse = APIUtility.getResultFromJson();
-            results = Arrays.stream(apiResponse.getResults()).toList();
+        // This enables me to retain the search history through the pre-written json file.
+        apiResponse = APIUtility.getResultFromJson();
+        if (apiResponse == null) {
+            try {
+                APIUtility.readITunesApi("all");
+                APIResponse apiResponse = APIUtility.getResultFromJson();
+                results = Arrays.stream(apiResponse.getResults()).toList();
 
-
-            resultsTableView.getItems().addAll(results);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                resultsTableView.getItems().clear();
+                resultsTableView.getItems().addAll(results);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
-
+        else {
+            results = Arrays.stream(apiResponse.getResults()).toList();
+            resultsTableView.getItems().clear();
+            resultsTableView.getItems().addAll(results);
+        }
     }
 
     /**
-     *
-     * I chose to remove the ActionEvent object for this one as it wasn't required for further application and I wanted to avoid any excess data to be transferred within the application.
+     * This is an eventHandler for the search button to be pressed after the user enters the search term in the text field
+     * I chose to remove the ActionEvent object for this one as it wasn't required for further application, and I wanted to avoid any excess data to be transferred within the application.
      * @throws IOException
      * @throws InterruptedException
      */
     @FXML
     public void searchButtonPressed() throws IOException, InterruptedException {
-
         resultsTableView.getItems().clear();
 
         String searchText = searchTextField.getText();
         APIUtility.readITunesApi(searchText);
-        APIResponse apiResponse = APIUtility.getResultFromJson();
-        List<Result> results = Arrays.stream(apiResponse.getResults()).toList();
+        apiResponse = APIUtility.getResultFromJson();
+        if (apiResponse != null) {
 
-        resultsTableView.getItems().addAll(results);
-    }
+            results = Arrays.stream(apiResponse.getResults()).toList();
 
-    @FXML
-    public void viewButtonPressed(ActionEvent event) throws IOException {
-        if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
-            Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
-            SceneChanger.showItemView(event, "item-view.fxml", "Selected Item", itemSelected);
+            // Try this one later... To filter out any Result objects with null artistName
+//        results = Arrays.stream(apiResponse.getResults()).collect(Collectors.filtering(a -> a.getArtistName())).toList();
 
+            resultsTableView.getItems().addAll(results);
+            searchTextField.clear();
+        }
+        else {
+            // TRY TO DISPLAY THIS USING WINDOW POP UP...
+            System.out.println("Sorry we can't find anything with: " + "'s'");
         }
 
     }
 
+    /**
+     * This is an eventHandler for enter key being pressed after entering the search term in the search text field
+     * @param keyEvent - Enter key is pressed from keyboard
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void enterKeyOnSearchBar(KeyEvent keyEvent) throws IOException, InterruptedException {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -119,7 +140,25 @@ public class LibraryViewController implements Initializable {
         }
     }
 
+    /**
+     * this is an eventHandler for view button being pressed which loads up a detailed view scene by using the SceneChanger class
+     * @param event - view button is clicked/pressed.
+     * @throws IOException
+     */
+    @FXML
+    public void viewButtonPressed(ActionEvent event) throws IOException {
+        if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
+            Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
+            Node eventNodeSource = (Node)event.getSource();
+            SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
+        }
+    }
 
+    /**
+     * this is another event handler for pressing enter key after selecting an item (Result class object) in the table view object
+     * @param keyEvent - Enter key is pressed on the keyboard
+     * @throws IOException
+     */
     // I had to hard code or repeat the scene loading commands due to the lack of ActionEvent object.
     @FXML
     public void enterKeyOnSelectedItem(KeyEvent keyEvent) throws IOException {
@@ -128,23 +167,8 @@ public class LibraryViewController implements Initializable {
             if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
                 Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
 
-                Node keyEventSource = ((Node)keyEvent.getSource());
-
-                double width = keyEventSource.getScene().getWidth();
-                double height = keyEventSource.getScene().getHeight();
-
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("item-view.fxml"));
-
-                Scene scene = new Scene(fxmlLoader.load(), width, height);
-
-                Stage stage = (Stage) keyEventSource.getScene().getWindow();
-
-                stage.setScene(scene);
-                stage.setTitle("Selection View");
-                stage.show();
-
-                ItemViewController ivc = fxmlLoader.getController();
-                ivc.loadItem(itemSelected);
+                Node eventNodeSource = (Node)keyEvent.getSource();
+                SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
             }
 
         }

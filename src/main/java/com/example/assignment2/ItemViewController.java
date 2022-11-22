@@ -54,26 +54,25 @@ public class ItemViewController  {
 //    @FXML
 //    private MediaView songMediaView;
 
+    // Didn't actually find any use for the initialize interface, so I just removed/commented it.
 //    @Override
 //    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Does nothing as of now
-//        artistNameLabel.setText("Chainsmokers");
-
-//        artistNameLabel.setText("Artist Name");
-//        collectionNameLabel.setText("Collection Name Label");
-//        genreLabel.setText("Genre Label");
-//        trackNameLabel.setText("Track name Label");
-//        typeLabel.setText("type Label");
+//        Does nothing ...
 //    }
 
+    /**
+     * This is the method which loads up the selected item from the TableView object in the previous scene. This gives a more detailed view of the Result object transferred from the 'Library' scene
+     * @param selectedItem - this is the Result object that is selected in the TableView
+     */
     @FXML
-    public void loadItem(Result selectedItem) throws FileNotFoundException {
+    public void loadItem(Result selectedItem) {
 
-        System.out.println(selectedItem.getWrapperType());
-        System.out.println(selectedItem.getArtistName());
-        System.out.println(selectedItem.getCollectionName());
-        System.out.println(selectedItem.getTrackName());
-        System.out.println(selectedItem.getPrimaryGenreName());
+        // Used this for testing purpose
+//        System.out.println(selectedItem.getWrapperType());
+//        System.out.println(selectedItem.getArtistName());
+//        System.out.println(selectedItem.getCollectionName());
+//        System.out.println(selectedItem.getTrackName());
+//        System.out.println(selectedItem.getPrimaryGenreName());
 
         titleLabel.setText(selectedItem.getTrackName());
 
@@ -83,15 +82,17 @@ public class ItemViewController  {
         Image image = new Image(selectedItem.getArtworkUrl100());
         coverImageView.setImage(image);
 
-        // Remove this one...
         typeLabel.setText(selectedItem.getKind());
-
         artistNameLabel.setText(selectedItem.getArtistName());
         collectionNameLabel.setText(selectedItem.getCollectionName());
         genreLabel.setText(selectedItem.getPrimaryGenreName());
         trackNameLabel.setText(selectedItem.getTrackName());
 
         urlLinkLabel.setText(selectedItem.getPreviewUrl());
+
+//        Testing the Result object being passed on ...
+//        System.out.println(selectedItem);
+
 
 //         This does not work!!
 
@@ -101,29 +102,28 @@ public class ItemViewController  {
 //        mediaPlayer.play();
     }
 
+    /**
+     * This is a trigger for the back button to switch scenes and load up the library view from the detailed view scene
+     * @param event - back button is pressed
+     * @throws IOException
+     */
     @FXML
     public void backButtonPressed(ActionEvent event) throws IOException {
-        SceneChanger.showLibraryView(event, "library-view.fxml", "Library");
+        Node eventNodeSource = (Node)event.getSource();
+        SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "Library");
     }
 
-    // I had to hard code or repeat the scene loading commands due to the lack of ActionEvent object.
+    /**
+     * This is another eventHandler for the enter key to be pressed after any TableView item selection
+     * @param keyEvent - Enter key pressed from the keyboard
+     * @throws IOException
+     */
     @FXML
     public void escKeyPressed(KeyEvent keyEvent) throws IOException {
         if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
 
-            // Another way of settting up the stage from source elements
-            double width = titleLabel.getScene().getWidth();
-            double height = titleLabel.getScene().getHeight();
-
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("library-view.fxml"));
-
-            Scene scene = new Scene(fxmlLoader.load(), width, height);
-
-            Stage stage = (Stage) titleLabel.getScene().getWindow();
-
-            stage.setScene(scene);
-            stage.setTitle("Library");
-            stage.show();
+            Node eventNodeSource = (Node)keyEvent.getSource();
+            SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "Library");
         }
     }
 }
