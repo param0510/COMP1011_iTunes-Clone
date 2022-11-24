@@ -6,41 +6,28 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment2.LibraryViewController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment2.LibraryViewController">
    <children>
       <BorderPane layoutX="580.0" layoutY="175.0" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <TableView fx:id="resultsTableView" onKeyPressed="#enterKeyOnSelectedItem" prefHeight="448.0" prefWidth="492.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="typeColumn" prefWidth="122.39998626708984" text="Type" />
-                <TableColumn fx:id="artistNameColumn" prefWidth="105.60003662109375" text="Artist Name" />
-                  <TableColumn fx:id="nameColumn" prefWidth="122.4000244140625" text="Name" />
-                  <TableColumn fx:id="countryColumn" prefWidth="124.80001831054688" text="Country" />
-                  <TableColumn fx:id="releaseDateColumn" prefWidth="115.2000732421875" text="Release Date" />
-                  <TableColumn fx:id="thumbnailColumn" prefWidth="126.4000244140625" text="Thumbnail" />
-              </columns>
-               <BorderPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </BorderPane.margin>
-            </TableView>
-         </center>
          <top>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" spacing="10.0" BorderPane.alignment="BOTTOM_RIGHT">
                <children>
-                  <Label alignment="TOP_LEFT" text="Library">
+                  <Label alignment="TOP_LEFT" styleClass="headingLabel" text="Library">
                      <font>
-                        <Font size="21.0" />
+                        <Font size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets right="50.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="searchTextField" onKeyPressed="#enterKeyOnSearchBar" prefHeight="26.0" prefWidth="266.0" />
+                  <TextField fx:id="searchTextField" onKeyPressed="#enterKeyOnSearchBar" prefHeight="0.0" prefWidth="257.0" />
                   <Button mnemonicParsing="false" onAction="#searchButtonPressed" text="Search" />
                </children>
                <padding>
@@ -51,9 +38,28 @@
          <padding>
             <Insets bottom="8.0" left="15.0" right="15.0" top="8.0" />
          </padding>
-         <bottom>
-            <Button mnemonicParsing="false" onAction="#viewButtonPressed" text="View" BorderPane.alignment="CENTER" />
-         </bottom>
+         <left>
+            <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="previewImageView" fitHeight="128.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="viewButton" mnemonicParsing="false" onAction="#viewButtonPressed" text="View" />
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <TableView fx:id="resultsTableView" prefHeight="506.0" prefWidth="736.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="releaseDateColumn" prefWidth="102.00005853176117" text="Release Date" />
+                <TableColumn fx:id="collectionNameColumn" prefWidth="249.3332290649414" text="Collection" />
+                  <TableColumn fx:id="trackNameColumn" prefWidth="151.33328247070312" text="Track" />
+                  <TableColumn fx:id="artistNameColumn" prefWidth="126.00015258789062" text="Artist" />
+                  <TableColumn fx:id="genreColumn" prefWidth="89.9998779296875" text="Genre" />
+              </columns>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </TableView>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

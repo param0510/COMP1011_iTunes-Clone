@@ -1,6 +1,9 @@
 package com.example.assignment2;
 
 import javafx.scene.image.Image;
+import javafx.util.converter.LocalDateTimeStringConverter;
+
+import java.time.*;
 
 public class Result {
     private String wrapperType, kind, artistName, collectionName, trackName, artistViewUrl, collectionViewUrl, trackViewUrl, previewUrl, artworkUrl30, artworkUrl100, releaseDate, trackTimeMillis, country, currency, primaryGenreName;
@@ -60,8 +63,16 @@ public class Result {
         return artworkUrl100;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public LocalDate getReleaseDate() {
+        Instant instant = Instant.parse(releaseDate);
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of(ZoneOffset.UTC.getId()));
+        LocalDate localDate = localDateTime.toLocalDate();
+        return localDate;
+    }
+
+    public int getReleaseYear() {
+        LocalDate localDate = getReleaseDate();
+        return localDate.getYear();
     }
 
     public String getTrackTimeMillis() {

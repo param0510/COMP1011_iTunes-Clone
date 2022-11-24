@@ -19,6 +19,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
 // Import also not working
@@ -28,28 +31,40 @@ import java.util.ResourceBundle;
 public class ItemViewController  {
 
     @FXML
-    public Label artistNameLabel;
+    private Label artistNameLabel;
 
     @FXML
     private Label collectionNameLabel;
 
     @FXML
+    private Label collectionPriceLabel;
+
+    @FXML
+    private Label countryLabel;
+
+    @FXML
+    private Label durationLabel;
+
+    @FXML
     private Label genreLabel;
 
     @FXML
-    private Label trackNameLabel;
-
-    @FXML
-    private Label typeLabel;
-
-    @FXML
-    private ImageView coverImageView;
+    private Label releaseDateLabel;
 
     @FXML
     private Label titleLabel;
 
     @FXML
-    private Label urlLinkLabel;
+    private Label trackNameLabel;
+
+    @FXML
+    private Label trackPriceLabel;
+
+    @FXML
+    private Label categoryLabel;
+
+    @FXML
+    private ImageView coverImageView;
 
 //    @FXML
 //    private MediaView songMediaView;
@@ -82,17 +97,24 @@ public class ItemViewController  {
         Image image = new Image(selectedItem.getArtworkUrl100());
         coverImageView.setImage(image);
 
-        typeLabel.setText(selectedItem.getKind());
+        categoryLabel.setText(selectedItem.getKind());
         artistNameLabel.setText(selectedItem.getArtistName());
-        collectionNameLabel.setText(selectedItem.getCollectionName());
-        genreLabel.setText(selectedItem.getPrimaryGenreName());
+        if (selectedItem.getCollectionName() != null) {
+            collectionNameLabel.setText(selectedItem.getCollectionName());
+        }
+        else {
+            collectionNameLabel.setText("N/A");
+        }
         trackNameLabel.setText(selectedItem.getTrackName());
-
-        urlLinkLabel.setText(selectedItem.getPreviewUrl());
+        releaseDateLabel.setText((selectedItem.getReleaseDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))));
+        genreLabel.setText(selectedItem.getPrimaryGenreName());
+        durationLabel.setText(selectedItem.getTrackTimeMillis() + " milliseconds");
+        countryLabel.setText(selectedItem.getCountry());
+        trackPriceLabel.setText("$" + selectedItem.getTrackPrice());
+        collectionPriceLabel.setText("$" + selectedItem.getCollectionPrice());
 
 //        Testing the Result object being passed on ...
 //        System.out.println(selectedItem);
-
 
 //         This does not work!!
 

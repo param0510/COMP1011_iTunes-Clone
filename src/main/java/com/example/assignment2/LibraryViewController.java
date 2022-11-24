@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,26 +36,29 @@ public class LibraryViewController implements Initializable {
     private TextField searchTextField;
 
     @FXML
-    private TableColumn<Result, String> typeColumn;
+    private TableColumn<Result, String> collectionNameColumn;
+
+    @FXML
+    private TableColumn<Result, String> genreColumn;
+
+    @FXML
+    private TableColumn<Result, String> trackNameColumn;
 
     @FXML
     private TableColumn<Result, String> artistNameColumn;
 
-    @FXML
-    private TableColumn<Result, String> nameColumn;
-
-    @FXML
-    private TableColumn<Result, String> countryColumn;
-
     // Change this to Date type later
     @FXML
-    private TableColumn<Result, String> releaseDateColumn;
+    private TableColumn<Result, LocalDate> releaseDateColumn;
 
     @FXML
-    private TableColumn<Result, Image> thumbnailColumn;
+    private ImageView previewImageView;
 
     @FXML
     private TableView<Result> resultsTableView;
+
+    @FXML
+    private Button viewButton;
 
     private List<Result> results;
     private APIResponse apiResponse;
@@ -66,11 +71,21 @@ public class LibraryViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("kind"));
-        artistNameColumn.setCellValueFactory(new PropertyValueFactory<>("artistName"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("trackName"));
-        countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+        // Hiding the view button for better user experience
+        viewButton.setVisible(false);
+
         releaseDateColumn.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
+        artistNameColumn.setCellValueFactory(new PropertyValueFactory<>("artistName"));
+        collectionNameColumn.setCellValueFactory(new PropertyValueFactory<>("collectionName"));
+        trackNameColumn.setCellValueFactory(new PropertyValueFactory<>("trackName"));
+        genreColumn.setCellValueFactory(new PropertyValueFactory<>("primaryGenreName"));
+
+        resultsTableView.getSelectionModel().selectedItemProperty().addListener( (obs,old, selectedItem) -> {
+            if (selectedItem != null && selectedItem.getArtworkUrl100() != null) {
+                previewImageView.setImage(new Image(selectedItem.getArtworkUrl100()));
+                viewButton.setVisible(true);
+            }
+        });
 
 //        thumbnailColumn.setCellValueFactory(new PropertyValueFactory<>("thumbnailImage"));
 
@@ -95,6 +110,22 @@ public class LibraryViewController implements Initializable {
             resultsTableView.getItems().clear();
             resultsTableView.getItems().addAll(results);
         }
+        resultsTableView.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+
+                if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
+                    Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
+
+                    Node eventNodeSource = (Node)keyEvent.getSource();
+                    try {
+                        SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
     }
 
     /**
@@ -162,15 +193,15 @@ public class LibraryViewController implements Initializable {
     // I had to hard code or repeat the scene loading commands due to the lack of ActionEvent object.
     @FXML
     public void enterKeyOnSelectedItem(KeyEvent keyEvent) throws IOException {
-        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-
-            if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
-                Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
-
-                Node eventNodeSource = (Node)keyEvent.getSource();
-                SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
-            }
-
-        }
+//        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+//
+//            if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
+//                Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
+//
+//                Node eventNodeSource = (Node)keyEvent.getSource();
+//                SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
+//            }
+//
+//        }
     }
 }

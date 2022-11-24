@@ -24,7 +24,7 @@ public class APIUtility {
         // Try changing %20 to + in OMDB Jaret example
         searchText = searchText.replaceAll(" ", "%20");
         // Preparing the uri for the API request call
-        String uri = "https://itunes.apple.com/search?term=" + searchText + "&limit=200";
+        String uri = "https://itunes.apple.com/search?term=" + searchText + "&media=music&limit=200";
 
         // Preparing the web client - like a browser for firing the uri
         HttpClient client = HttpClient.newHttpClient();
