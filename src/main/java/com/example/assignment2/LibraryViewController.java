@@ -118,7 +118,7 @@ public class LibraryViewController implements Initializable {
 
                     Node eventNodeSource = (Node)keyEvent.getSource();
                     try {
-                        SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
+                        SceneChanger.showItemView(eventNodeSource, itemSelected);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -181,7 +181,7 @@ public class LibraryViewController implements Initializable {
         if (resultsTableView.getSelectionModel().getSelectedItem() != null) {
             Result itemSelected = resultsTableView.getSelectionModel().getSelectedItem();
             Node eventNodeSource = (Node)event.getSource();
-            SceneChanger.showItemView(eventNodeSource, "item-view.fxml", "Selected Item", itemSelected);
+            SceneChanger.showItemView(eventNodeSource, itemSelected);
         }
     }
 

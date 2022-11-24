@@ -48,6 +48,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Category:">
@@ -115,37 +116,47 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label text="Country:" GridPane.rowIndex="7">
+                        <Label text="Country:" GridPane.rowIndex="8">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="countryLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Label fx:id="countryLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label text="Track Price:" GridPane.rowIndex="8">
+                        <Label text="Track Price:" GridPane.rowIndex="9">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="trackPriceLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <Label fx:id="trackPriceLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label text="Collection Price:" GridPane.rowIndex="9">
+                        <Label text="Collection Price:" GridPane.rowIndex="10">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="collectionPriceLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                        <Label fx:id="collectionPriceLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="10">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
                         <Label fx:id="trackNameLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Streamable:" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="streamableLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
                               <Font size="15.0" />
                            </font>

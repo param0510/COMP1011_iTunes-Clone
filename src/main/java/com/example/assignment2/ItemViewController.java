@@ -46,6 +46,9 @@ public class ItemViewController  {
     private Label durationLabel;
 
     @FXML
+    private Label streamableLabel;
+
+    @FXML
     private Label genreLabel;
 
     @FXML
@@ -108,7 +111,9 @@ public class ItemViewController  {
         trackNameLabel.setText(selectedItem.getTrackName());
         releaseDateLabel.setText((selectedItem.getReleaseDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))));
         genreLabel.setText(selectedItem.getPrimaryGenreName());
-        durationLabel.setText(selectedItem.getTrackTimeMillis() + " milliseconds");
+        durationLabel.setText(selectedItem.getDuration());
+        // complete this..
+        streamableLabel.setText(selectedItem.isStreamableString());
         countryLabel.setText(selectedItem.getCountry());
         trackPriceLabel.setText("$" + selectedItem.getTrackPrice());
         collectionPriceLabel.setText("$" + selectedItem.getCollectionPrice());
@@ -132,7 +137,7 @@ public class ItemViewController  {
     @FXML
     public void backButtonPressed(ActionEvent event) throws IOException {
         Node eventNodeSource = (Node)event.getSource();
-        SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "Library");
+        SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "iTunes - Library");
     }
 
     /**
@@ -145,7 +150,7 @@ public class ItemViewController  {
         if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
 
             Node eventNodeSource = (Node)keyEvent.getSource();
-            SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "Library");
+            SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "iTunes - Library");
         }
     }
 }
