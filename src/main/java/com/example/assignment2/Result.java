@@ -37,6 +37,10 @@ public class Result {
         return artworkUrl100;
     }
 
+    /**
+     * This function converts the date into LocalDate type and returns it
+     * @return LocalDate localDate
+     */
     public LocalDate getReleaseDate() {
         Instant instant = Instant.parse(releaseDate);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of(ZoneOffset.UTC.getId()));
@@ -48,6 +52,10 @@ public class Result {
         return Integer.parseInt(trackTimeMillis);
     }
 
+    /**
+     * This function uses the Duration class to convert the duration in milliseconds to hours mins and seconds format
+     * @return String
+     */
     public String getDuration(){
         int milliSeconds = Integer.parseInt(trackTimeMillis);
         Duration duration = Duration.ofMillis(milliSeconds);
@@ -60,6 +68,10 @@ public class Result {
             return String.format("%d min %d sec", minutes, seconds);
     }
 
+    /**
+     * These are the rest of the getters
+     * @return
+     */
     public String getCountry() {
         return country;
     }
@@ -80,6 +92,10 @@ public class Result {
         return isStreamable;
     }
 
+    /**
+     * This returns a String form of the boolean isStreamable instance
+     * @return String
+     */
     public String isStreamableString() {
         if(isStreamable)
             return "Yes";

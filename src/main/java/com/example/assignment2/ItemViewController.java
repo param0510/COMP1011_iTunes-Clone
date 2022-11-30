@@ -137,7 +137,7 @@ public class ItemViewController  {
     @FXML
     public void backButtonPressed(ActionEvent event) throws IOException {
         Node eventNodeSource = (Node)event.getSource();
-        SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "iTunes - Library");
+        SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "iTunes - Library", "apple-icon.png");
     }
 
     /**
@@ -150,7 +150,7 @@ public class ItemViewController  {
         if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
 
             Node eventNodeSource = (Node)keyEvent.getSource();
-            SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "iTunes - Library");
+            SceneChanger.changeScene(eventNodeSource, "library-view.fxml", "iTunes - Library", "apple-icon.png");
         }
     }
 }

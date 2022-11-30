@@ -87,7 +87,6 @@ public class LibraryViewController implements Initializable {
             }
         });
 
-//        thumbnailColumn.setCellValueFactory(new PropertyValueFactory<>("thumbnailImage"));
 
         // This enables me to retain the search history through the pre-written json file.
         apiResponse = APIUtility.getResultFromJson();
